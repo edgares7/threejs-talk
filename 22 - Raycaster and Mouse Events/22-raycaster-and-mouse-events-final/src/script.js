@@ -19,19 +19,19 @@ const scene = new THREE.Scene()
  * Objects
  */
 const object1 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+  new THREE.SphereGeometry(0.5, 16, 16),
+  new THREE.MeshBasicMaterial({ color: '#ff0000' })
 )
-object1.position.x = - 2
+object1.position.x = -2
 
 const object2 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+  new THREE.SphereGeometry(0.5, 16, 16),
+  new THREE.MeshBasicMaterial({ color: '#ff0000' })
 )
 
 const object3 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.5, 16, 16),
-    new THREE.MeshBasicMaterial({ color: '#ff0000' })
+  new THREE.SphereGeometry(0.5, 16, 16),
+  new THREE.MeshBasicMaterial({ color: '#ff0000' })
 )
 object3.position.x = 2
 
@@ -42,7 +42,7 @@ scene.add(object1, object2, object3)
  */
 const raycaster = new THREE.Raycaster()
 let currentIntersect = null
-const rayOrigin = new THREE.Vector3(- 3, 0, 0)
+const rayOrigin = new THREE.Vector3(-3, 0, 0)
 const rayDirection = new THREE.Vector3(10, 0, 0)
 rayDirection.normalize()
 
@@ -52,23 +52,22 @@ rayDirection.normalize()
  * Sizes
  */
 const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
+  width: window.innerWidth,
+  height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+window.addEventListener('resize', () => {
+  // Update sizes
+  sizes.width = window.innerWidth
+  sizes.height = window.innerHeight
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+  // Update camera
+  camera.aspect = sizes.width / sizes.height
+  camera.updateProjectionMatrix()
 
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  // Update renderer
+  renderer.setSize(sizes.width, sizes.height)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
 /**
@@ -76,38 +75,39 @@ window.addEventListener('resize', () =>
  */
 const mouse = new THREE.Vector2()
 
-window.addEventListener('mousemove', (event) =>
-{
-    mouse.x = event.clientX / sizes.width * 2 - 1
-    mouse.y = - (event.clientY / sizes.height) * 2 + 1
+window.addEventListener('mousemove', (event) => {
+  mouse.x = (event.clientX / sizes.width) * 2 - 1
+  mouse.y = -(event.clientY / sizes.height) * 2 + 1
 })
 
-window.addEventListener('click', () =>
-{
-    if(currentIntersect)
-    {
-        switch(currentIntersect.object)
-        {
-            case object1:
-                console.log('click on object 1')
-                break
+window.addEventListener('click', () => {
+  if (currentIntersect) {
+    switch (currentIntersect.object) {
+      case object1:
+        console.log('click on object 1')
+        break
 
-            case object2:
-                console.log('click on object 2')
-                break
+      case object2:
+        console.log('click on object 2')
+        break
 
-            case object3:
-                console.log('click on object 3')
-                break
-        }
+      case object3:
+        console.log('click on object 3')
+        break
     }
+  }
 })
 
 /**
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100
+)
 camera.position.z = 3
 scene.add(camera)
 
@@ -119,7 +119,7 @@ controls.enableDamping = true
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+  canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -142,117 +142,103 @@ scene.add(directionalLight)
 const gltfLoader = new GLTFLoader()
 
 let model = null
-gltfLoader.load(
-    './models/Duck/glTF-Binary/Duck.glb',
-    (gltf) =>
-    {
-        model = gltf.scene
-        model.position.y = - 1.2
-        scene.add(model)
-    }
-)
+gltfLoader.load('./models/Duck/glTF-Binary/Duck.glb', (gltf) => {
+  model = gltf.scene
+  model.position.y = -1.2
+  scene.add(model)
+})
 
 /**
  * Animate
  */
 const clock = new THREE.Clock()
 
-const tick = () =>
-{
-    const elapsedTime = clock.getElapsedTime()
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime()
 
-    // Animate objects
-    object1.position.y = Math.sin(elapsedTime * 0.3) * 1.5
-    object2.position.y = Math.sin(elapsedTime * 0.8) * 1.5
-    object3.position.y = Math.sin(elapsedTime * 1.4) * 1.5
+  // Animate objects
+  object1.position.y = Math.sin(elapsedTime * 0.3) * 1.5
+  object2.position.y = Math.sin(elapsedTime * 0.8) * 1.5
+  object3.position.y = Math.sin(elapsedTime * 1.4) * 1.5
 
-    // Cast a fixed ray
-    // const rayOrigin = new THREE.Vector3(- 3, 0, 0)
-    // const rayDirection = new THREE.Vector3(1, 0, 0)
-    // rayDirection.normalize()
-    
-    // raycaster.set(rayOrigin, rayDirection)
-    
-    // const objectsToTest = [object1, object2, object3]
-    // const intersects = raycaster.intersectObjects(objectsToTest)
+  // Cast a fixed ray
+  // const rayOrigin = new THREE.Vector3(- 3, 0, 0)
+  // const rayDirection = new THREE.Vector3(1, 0, 0)
+  // rayDirection.normalize()
 
-    // for(const object of objectsToTest)
-    // {
-    //     object.material.color.set('#ff0000')
-    // }
+  // raycaster.set(rayOrigin, rayDirection)
 
-    // for(const intersect of intersects)
-    // {
-    //     intersect.object.material.color.set('#0000ff')
-    // }
+  // const objectsToTest = [object1, object2, object3]
+  // const intersects = raycaster.intersectObjects(objectsToTest)
 
-    // Cast a ray from the mouse
-    // raycaster.setFromCamera(mouse, camera)
-    
-    // const objectsToTest = [object1, object2, object3]
-    // const intersects = raycaster.intersectObjects(objectsToTest)
-    
-    // for(const intersect of intersects)
-    // {
-    //     intersect.object.material.color.set('#0000ff')
-    // }
+  // for(const object of objectsToTest)
+  // {
+  //     object.material.color.set('#ff0000')
+  // }
 
-    // for(const object of objectsToTest)
-    // {
-    //     if(!intersects.find(intersect => intersect.object === object))
-    //     {
-    //         object.material.color.set('#ff0000')
-    //     }
-    // }
+  // for(const intersect of intersects)
+  // {
+  //     intersect.object.material.color.set('#0000ff')
+  // }
 
-    // Cast a ray from the mouse and handle events
-    raycaster.setFromCamera(mouse, camera)
+  // Cast a ray from the mouse
+  // raycaster.setFromCamera(mouse, camera)
 
-    const objectsToTest = [object1, object2, object3]
-    const intersects = raycaster.intersectObjects(objectsToTest)
-    
-    if(intersects.length)
-    {
-        if(!currentIntersect)
-        {
-            console.log('mouse enter')
-        }
+  // const objectsToTest = [object1, object2, object3]
+  // const intersects = raycaster.intersectObjects(objectsToTest)
 
-        currentIntersect = intersects[0]
-    }
-    else
-    {
-        if(currentIntersect)
-        {
-            console.log('mouse leave')
-        }
-        
-        currentIntersect = null
+  // for(const intersect of intersects)
+  // {
+  //     intersect.object.material.color.set('#0000ff')
+  // }
+
+  // for(const object of objectsToTest)
+  // {
+  //     if(!intersects.find(intersect => intersect.object === object))
+  //     {
+  //         object.material.color.set('#ff0000')
+  //     }
+  // }
+
+  // Cast a ray from the mouse and handle events
+  raycaster.setFromCamera(mouse, camera)
+
+  const objectsToTest = [object1, object2, object3]
+  const intersects = raycaster.intersectObjects(objectsToTest)
+
+  if (intersects.length) {
+    if (!currentIntersect) {
+      console.log('mouse enter')
     }
 
-    // Test intersect with a model
-    if(model)
-    {
-        const modelIntersects = raycaster.intersectObject(model)
-        
-        if(modelIntersects.length)
-        {
-            model.scale.set(1.2, 1.2, 1.2)
-        }
-        else
-        {
-            model.scale.set(1, 1, 1)
-        }
+    currentIntersect = intersects[0]
+  } else {
+    if (currentIntersect) {
+      console.log('mouse leave')
     }
 
-    // Update controls
-    controls.update()
+    currentIntersect = null
+  }
 
-    // Render
-    renderer.render(scene, camera)
+  // Test intersect with a model
+  if (model) {
+    const modelIntersects = raycaster.intersectObject(model)
 
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
+    if (modelIntersects.length) {
+      model.scale.set(1.2, 1.2, 1.2)
+    } else {
+      model.scale.set(1, 1, 1)
+    }
+  }
+
+  // Update controls
+  controls.update()
+
+  // Render
+  renderer.render(scene, camera)
+
+  // Call tick again on the next frame
+  window.requestAnimationFrame(tick)
 }
 
 tick()
